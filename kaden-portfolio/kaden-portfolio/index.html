@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kaden Cobbs | Operations &amp; Workflow Automation</title>
+<meta name="description" content="Portfolio resume of Kaden Cobbs, an operations professional and workflow builder in Jersey City, NJ.">
+<script>
+  // Saved choice first, then the visitor's system theme, then dark
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('kc-portfolio-theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+<div class="wrap">
+
+  <header class="header">
+    <div class="intro">
+      <div class="eyebrow">Jersey City, NJ · Portfolio Resume</div>
+      <div class="hello">Hello, I'm</div>
+      <h1>Kaden Cobbs</h1>
+      <p class="tagline">Operations professional and workflow builder, making administrative work in healthcare, legal and financial settings faster and easier to track.</p>
+    </div>
+    <div class="contact">
+      <div class="contact-row">
+        <a class="pill" href="mailto:kcc9839@nyu.edu">kcc9839@nyu.edu</a>
+        <a class="pill" href="tel:+18622069349">(862) 206-9349</a>
+      </div>
+      <div class="contact-row">
+        <a class="pill pill-accent" href="https://drive.google.com/file/d/1_Bfo21GrGhuHd2dTiGUwJqpGaxAQWwb1/view?usp=sharing" target="_blank" rel="noopener">Bulleted Resume ↗</a>
+        <a class="pill" href="https://drive.google.com/file/d/1j8dpUlIKRS8OyiJHXm0B_t567y3bD8hA/view?usp=sharing" target="_blank" rel="noopener">Recommendation letter ↗</a>
+      </div>
+      <div class="mode">
+        <span class="mode-label">Mode</span>
+        <div class="toggle" role="group" aria-label="Color mode">
+          <span class="knob" aria-hidden="true"></span>
+          <button type="button" data-set-theme="light">☀ Light</button>
+          <button type="button" data-set-theme="dark">☾ Dark</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cols">
+    <aside class="sidebar">
+      <section>
+        <h2 class="label">Education</h2>
+        <div class="mono-sm">Aug 2021 — May 2025</div>
+        <div class="degree">Bachelor in Economics</div>
+        <div class="school">NYU College of Arts &amp; Sciences<br>New York City, USA</div>
+      </section>
+
+      <section>
+        <h2 class="label">Capabilities</h2>
+        <ul class="caps">
+          <li>Figma</li><li>UI &amp; UX Design</li><li>Graphic Design</li><li>Canva</li>
+          <li>Python</li><li>Javascript</li><li>React</li><li>HTML &amp; CSS</li>
+          <li>Cursor</li><li>Statistical Analysis</li><li>MS Excel</li><li>Google Sheets</li>
+          <li>User Interviews &amp; Research</li>
+        </ul>
+      </section>
+
+      <section class="rec">
+        <div class="rec-label">Recommendation</div>
+        <p>A letter from <strong>Katie O'Brien</strong>, Senior Director of HR at NYU Libraries.</p>
+        <a href="https://drive.google.com/file/d/1j8dpUlIKRS8OyiJHXm0B_t567y3bD8hA/view?usp=sharing" target="_blank" rel="noopener">Read the letter ↗</a>
+      </section>
+    </aside>
+
+    <main>
+      <div class="main-head">
+        <h2>Projects &amp; Selected Works</h2>
+        <span class="mono-sm">5</span>
+      </div>
+
+      <section class="group">
+        <div class="group-head"><h3>Tomo</h3><span class="rule"></span><span class="count">01 project</span></div>
+        <article class="card">
+          <div class="card-body">
+            <div class="date">April 2026 to Present</div>
+            <h3>Loan Processing Tools</h3>
+            <p>Tools I built to help my team manage a pipeline of over 100 loans. The Auto Loan Labeler reads our pipeline sheet to label and sort incoming emails automatically. The Shared Pipeline Sheet tracks key loan milestones across multiple JAAs. I also built Gemini Gems for title orders and the parties screen, and designed UX proposals for a better pipeline view and an in-platform loan inbox.</p>
+            <div class="tags">Workflow Automation · Process Design · UX Design</div>
+          </div>
+          <button type="button" class="shot shot-top" data-cap="Shared Pipeline Sheet — borrower data redacted">
+            <img src="images/pipeline-sheet-redacted.jpg" alt="Shared loan pipeline spreadsheet with borrower columns redacted">
+          </button>
+        </article>
+      </section>
+
+      <section class="group">
+        <div class="group-head"><h3>NYU</h3><span class="rule"></span><span class="count">04 projects</span></div>
+
+        <article class="card">
+          <button type="button" class="shot" data-cap="Feather — appointment letter generator">
+            <img src="images/feather.jpg" alt="Feather app home screen">
+          </button>
+          <div class="card-body">
+            <div class="date">June 2025</div>
+            <h3>Feather</h3>
+            <p>Replaced manual HR processes with a digital workflow that reduced appointment processing time by 5×.</p>
+            <div class="tags">Product Design · Python Development</div>
+            <div class="links">
+              <a href="https://www.dropbox.com/scl/fo/1v4883jet0s3jtsl2v4pu/AI_tABULtGye-ewVqdSZ62s/Feather%20User%20Manual.pdf?rlkey=dg398wqtqqdav94mc9tp9vfxz&amp;e=2&amp;st=xy4f80ek&amp;dl=0" target="_blank" rel="noopener">Project Brief &amp; Manual ↗</a>
+              <a href="https://drive.google.com/file/d/1XozZD-NORargz6fPDZMwRL8nI8MufQe5/view?usp=drive_link" target="_blank" rel="noopener">Figma Wireframes PDF ↗</a>
+              <a href="https://www.dropbox.com/scl/fo/1v4883jet0s3jtsl2v4pu/AFlFen6oJmhB6fHtebhUozo?rlkey=dg398wqtqqdav94mc9tp9vfxz&amp;e=1&amp;st=xy4f80ek&amp;dl=0" target="_blank" rel="noopener">Feather App Download ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <div class="date">May 2023 — June 2025</div>
+            <h3>Vicinity Local</h3>
+            <p>A social media and events app designed to build community and empower people.</p>
+            <div class="tags">UX Design · Research · Startup Project</div>
+            <div class="links">
+              <a href="https://drive.google.com/file/d/1j-w-QLA8E7HcVhRBhR4kuIKHfktdib5x/view?usp=sharing" target="_blank" rel="noopener">Introducing Vicinity PDF ↗</a>
+            </div>
+          </div>
+          <button type="button" class="shot shot-tall" data-cap="Vicinity Local — feed">
+            <img src="images/vicinity.jpg" alt="Vicinity Local app feed">
+          </button>
+        </article>
+
+        <article class="card">
+          <button type="button" class="shot" data-cap="NYU Longer Service Awards, 2025">
+            <img src="images/longer-service-awards.jpg" alt="NYU Longer Service Awards ceremony">
+          </button>
+          <div class="card-body">
+            <div class="date">April 2024 &amp; May 2025</div>
+            <h3>NYU Longer Service Awards</h3>
+            <p>Led creative direction and technical production for NYU Libraries' annual ceremony recognizing employees for their years of service.</p>
+            <div class="tags">Creative Director · Technical Producer</div>
+            <div class="links">
+              <a href="https://drive.google.com/file/d/1gxgkuvStgd6ZvvfxpQOe7fOfIw474iPq/view?usp=drive_link" target="_blank" rel="noopener">Project Brief &amp; Photos ↗</a>
+              <a href="https://www.figma.com/deck/S8g4x5kHDgz8wyZhEFtD1E/Longer-Service-Awards-2025--Portfolio-Version-?node-id=8-122317&amp;t=pet1c19vJdAr3HUT-0&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1" target="_blank" rel="noopener">2025 Presentation ↗</a>
+              <a href="https://docs.google.com/presentation/d/11aK1jd6Z4akn9efdpaOSjXYVVSjfmYbD/edit?usp=sharing&amp;ouid=102873245606198029807&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener">2024 Presentation ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <div class="date">August 2024</div>
+            <h3>Employee Coaching Program</h3>
+            <p>Developed an employee coaching program connecting NYU staff with student mentors to support career advancement and leadership development.</p>
+            <div class="tags">Program Design · Cross-Department Coordination</div>
+            <div class="links">
+              <a href="https://drive.google.com/file/d/18EoROIKfPNUkHxbCfxN_W-NFiaPxAMIb/view?usp=drive_link" target="_blank" rel="noopener">Coaching Pamphlet ↗</a>
+            </div>
+          </div>
+          <button type="button" class="shot shot-tall" data-cap="NYU Library's Coaching Program pamphlet">
+            <img src="images/coaching.jpg" alt="NYU Library's Coaching Program pamphlet cover">
+          </button>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <span class="mono-sm">Kaden Cobbs · Jersey City, NJ</span>
+        <a href="mailto:kcc9839@nyu.edu">Let's build something → kcc9839@nyu.edu</a>
+      </footer>
+    </main>
+  </div>
+</div>
+</div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <figure>
+    <img id="lightbox-img" src="" alt="">
+    <figcaption id="lightbox-cap"></figcaption>
+  </figure>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
