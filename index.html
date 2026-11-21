@@ -23,7 +23,7 @@
 :root {
   --bg: #0D0C11; --panel: #151420; --panel2: #1C1A28; --line: #2A2738;
   --ink: #F4F2F8; --ink2: #B9B4C7; --ink3: #847E96;
-  --accent: #7AAEFF; --accent-ink: #0D0C11; --shadow: 0 18px 40px rgba(0,0,0,.45);
+  --accent: #3D8BFF; --accent-ink: #0D0C11; --shadow: 0 18px 40px rgba(0,0,0,.45);
   --blue: #8FB8FF; --blue-line: #2E3D5C; --blue-bg: #131B2A;
   --serif: 'Instrument Serif', serif;
   --sans: 'Instrument Sans', system-ui, sans-serif;
@@ -32,7 +32,7 @@
 :root[data-theme="light"] {
   --bg: #F7F5FA; --panel: #FFFFFF; --panel2: #F1EDF7; --line: #E3DEEC;
   --ink: #141220; --ink2: #565068; --ink3: #6E6880;
-  --accent: #1A4FC4; --accent-ink: #FFFFFF; --shadow: 0 18px 40px rgba(10,30,70,.10);
+  --accent: #1560F5; --accent-ink: #FFFFFF; --shadow: 0 18px 40px rgba(10,30,70,.10);
   --blue: #12459E; --blue-line: #C4D7F7; --blue-bg: #EEF4FF;
 }
 
@@ -65,7 +65,7 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 
 .mode { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
 .mode-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink3); font-weight: 700; font-style: italic; text-decoration: underline; }
-.toggle { position: relative; display: flex; padding: 4px; gap: 2px; background: var(--panel2); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); }
+.toggle { position: relative; display: flex; padding: 4px; gap: 2px; background: var(--panel2); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow); cursor: pointer; }
 .knob { position: absolute; top: 4px; left: 4px; width: calc(50% - 4px); height: calc(100% - 8px); border-radius: 999px; background: var(--accent); transition: transform .28s cubic-bezier(.4,0,.2,1); }
 :root[data-theme="dark"] .knob { transform: translateX(100%); }
 .toggle button { position: relative; z-index: 1; background: none; border: 0; border-radius: 999px; padding: 8px 15px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; white-space: nowrap; cursor: pointer; color: var(--ink2); transition: color .2s ease; }
@@ -317,12 +317,11 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 <script>
 // Light / dark mode
 const root = document.documentElement;
-document.querySelectorAll('[data-set-theme]').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const theme = btn.dataset.setTheme;
-    root.dataset.theme = theme;
-    try { localStorage.setItem('kc-portfolio-theme', theme); } catch (e) {}
-  });
+// Any click on the toggle (either side, or the knob) flips the theme
+document.querySelector('.toggle').addEventListener('click', () => {
+  const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  root.dataset.theme = theme;
+  try { localStorage.setItem('kc-portfolio-theme', theme); } catch (e) {}
 });
 
 // Follow system theme changes until the visitor picks one
