@@ -169,7 +169,8 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 .pgrid-feat { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .pgrid-feat .pcard-body h3 { font-size: 26px; }
 @media (max-width: 1100px) { .pgrid-feat { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 640px) { .pgrid-feat { grid-template-columns: minmax(0, 1fr); } }
+.pgrid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 640px) { .pgrid-feat, .pgrid-2 { grid-template-columns: minmax(0, 1fr); } }
 .pcard { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--panel); border-radius: 20px; overflow: hidden; color: var(--ink); transition: transform .3s ease, border-color .3s ease; }
 .pcard:hover { transform: translateY(-4px); border-color: var(--accent); color: var(--ink); }
 .pcard:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -191,6 +192,18 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 .rec-strip { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; background: var(--accent); color: var(--accent-ink); border-radius: 16px; padding: 18px 22px; font-size: 16px; line-height: 1.45; }
 .rec-strip:hover { opacity: .9; color: var(--accent-ink); }
 .rec-strip .rec-label { margin: 0; }
+
+.pcard-wide { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+.pcard-wide .pcard-img { aspect-ratio: auto; min-height: 100%; }
+.pcard-wide .pcard-img img { object-fit: contain; }
+.pcard-wide .pcard-body { padding: 28px; }
+.toolchips { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.toolchips li { border: 1px solid var(--blue-line); background: var(--blue-bg); color: var(--blue); border-radius: 7px; padding: 5px 10px; font-size: 13px; font-weight: 500; }
+@media (max-width: 760px) {
+  .pcard-wide { grid-template-columns: minmax(0, 1fr); }
+  .pcard-wide .pcard-img { aspect-ratio: 16 / 9; }
+  .pcard-wide .pcard-body { padding: 22px; }
+}
 
 /* About */
 .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 18px; align-items: start; }
@@ -215,6 +228,7 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 .prose p, .prose li { font-size: 17px; line-height: 1.65; color: var(--ink2); text-wrap: pretty; }
 .prose p + p, .prose ul + p, .prose ol + p { margin-top: 14px; }
 .prose ul, .prose ol { padding-left: 1.2em; margin: 0; display: grid; gap: 10px; }
+.nda-note { margin-top: 22px !important; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 12px; font-size: 15px !important; color: var(--ink3) !important; }
 .prose strong { color: var(--ink); font-weight: 600; }
 .facts { position: sticky; top: 84px; border: 1px solid var(--line); background: var(--panel); border-radius: 18px; padding: 22px; }
 .facts dl { margin: 0; display: grid; gap: 14px; }
@@ -334,7 +348,7 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
     <div class="pgrid pgrid-feat">
       <a class="pcard" href="#/projects/loan-processing-tools">
         <div class="pcard-img tomo"><img data-img="tomo" alt=""></div>
-        <div class="pcard-body"><div class="date">Tomo Mortgage · 2026–Present</div><h3>Loan Processing Tools</h3><p>Automations that keep a pipeline of 100+ loans moving.</p><span class="pcard-more">View project →</span></div>
+        <div class="pcard-body"><div class="date">Tomo Mortgage · 2026–Present</div><h3>Loan Processing Tools</h3><p>Five tools that keep a pipeline of 100+ loans moving.</p><span class="pcard-more">View project →</span></div>
       </a>
       <a class="pcard" href="#/projects/feather">
         <div class="pcard-img"><img data-img="feather" alt=""></div>
@@ -366,14 +380,16 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 
     <div class="group-head"><h3>Tomo Mortgage</h3><span class="rule"></span><span class="count">01 project</span></div>
     <div class="pgrid">
-      <a class="pcard" href="#/projects/loan-processing-tools">
+      <a class="pcard pcard-wide" href="#/projects/loan-processing-tools">
         <div class="pcard-img tomo"><img data-img="tomo" alt=""></div>
-        <div class="pcard-body"><div class="date">April 2026 to Present</div><h3>Loan Processing Tools</h3><p>Automations that keep a pipeline of 100+ loans moving.</p><div class="tags">Google Apps Script · Workflow Automation · AI Tools</div><span class="pcard-more">View project →</span></div>
+        <div class="pcard-body"><div class="date">April 2026 to Present · 5 tools</div><h3>Loan Processing Tools</h3><p>A set of five automations and designs that keep a pipeline of 100+ loans moving.</p>
+          <ul class="toolchips"><li>Automatic email filing</li><li>Shared pipeline tracker</li><li>Title order bot</li><li>Parties screen bot</li><li>Pipeline &amp; inbox UX proposals</li></ul>
+          <div class="tags">Google Apps Script · Workflow Automation · AI Tools</div><span class="pcard-more">View project →</span></div>
       </a>
     </div>
 
     <div class="group-head"><h3>NYU</h3><span class="rule"></span><span class="count">04 projects</span></div>
-    <div class="pgrid">
+    <div class="pgrid pgrid-2">
       <a class="pcard" href="#/projects/feather">
         <div class="pcard-img"><img data-img="feather" alt=""></div>
         <div class="pcard-body"><div class="date">June 2025</div><h3>Feather</h3><p>Replaced manual HR processes with a digital workflow that reduced appointment processing time by 5×.</p><div class="tags">Product Design · Python Development</div><span class="pcard-more">View project →</span></div>
@@ -441,28 +457,31 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
     <a class="back" href="#/projects">← All projects</a>
     <div class="eyebrow">Tomo Mortgage · April 2026 to Present</div>
     <h1 class="view-title page-title" tabindex="-1">Loan Processing Tools</h1>
-    <p class="lede">Automations that help my team keep a pipeline of more than 100 loans moving.</p>
+    <p class="lede">Five tools I built and designed to help my team keep a pipeline of more than 100 loans moving.</p>
     <div class="tags">Google Apps Script · Workflow Automation · AI Tools</div>
     <div class="hero-logo tomo"><img data-src-id="tomo" src="data:image/webp;base64,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" alt="Tomo logo"></div>
     <div class="proj-grid">
       <div class="prose">
         <h2>The problem</h2>
         <p>With over 100 loans in my pipeline, email was the bottleneck. Every incoming message had to be matched to the right loan and filed by hand, and the status of each file lived in too many places.</p>
-        <h2>What I built</h2>
-        <ul>
+        <h2>The five tools</h2>
+        <ol class="tool-list">
           <li><strong>Automatic email filing.</strong> A Google Apps Script that reads our pipeline sheet and labels each incoming email with the loan it belongs to, so it lands in the right place on its own.</li>
-          <li><strong>A shared tracking sheet.</strong> One sheet the whole team uses to see the key milestones for every loan and where each file stands.</li>
-          <li><strong>Two Gemini bots.</strong> Built with Gemini Gems to take over repetitive data entry for title orders and the parties screen.</li>
-          <li><strong>UX proposals.</strong> Designs for a clearer pipeline view and a loan inbox built into our platform.</li>
-        </ul>
+          <li><strong>Shared pipeline tracker.</strong> One sheet the whole team uses to see the key milestones for every loan and where each file stands.</li>
+          <li><strong>Title order bot.</strong> A Gemini Gem that takes over the repetitive data entry for title orders.</li>
+          <li><strong>Parties screen bot.</strong> A second Gemini Gem that fills in the parties screen for each loan.</li>
+          <li><strong>Pipeline &amp; inbox UX proposals.</strong> Designs for a clearer pipeline view and a loan inbox built into our platform.</li>
+        </ol>
         <h2>The result</h2>
         <p>Less time sorting email and retyping the same information, and a single place where the team can check on any loan.</p>
+        <p class="nda-note">This work is covered by an NDA, so screenshots and some details are left out.</p>
       </div>
       <aside class="facts">
         <dl>
           <div><dt>Organization</dt><dd>Tomo Mortgage</dd></div>
           <div><dt>Timeline</dt><dd>April 2026 to Present</dd></div>
           <div><dt>Tools</dt><dd>Google Apps Script, Google Sheets, Gemini Gems</dd></div>
+          <div><dt>Scope</dt><dd>5 tools across automation, AI and UX design</dd></div>
         </dl>
       </aside>
     </div>
