@@ -226,6 +226,16 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 .ticker:hover .ticker-track { animation-play-state: paused; }
 .ticker-track ul { list-style: none; margin: 0; padding: 0 5px 0 0; display: flex; gap: 10px; }
 .ticker li { white-space: nowrap; border: 1px solid var(--blue-line); background: var(--blue-bg); color: var(--blue); border-radius: 999px; padding: 6px 13px; font-size: 13.5px; font-weight: 500; }
+/* Home: bold gradient words with slashes */
+.home-skills .ticker { --speed: 1.5; }
+.home-skills .ticker-track ul { gap: 0; padding: 0; align-items: center; }
+.home-skills .ticker li { border: 0; padding: 4px 0; border-radius: 0; font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; letter-spacing: -.01em; background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 35%, var(--ink))); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.home-skills .ticker li::after { content: "/"; -webkit-text-fill-color: var(--ink3); color: var(--ink3); font-weight: 400; margin: 0 22px; }
+/* Projects page: stock-ticker strip with thin rules and green arrows */
+.view[data-view="projects"] .ticker, .proj-skills .ticker { border-top: 1px solid var(--blue-line); border-bottom: 1px solid var(--blue-line); background: var(--blue-bg); padding: 11px 0; -webkit-mask-image: none; mask-image: none; }
+.view[data-view="projects"] .ticker-track ul, .proj-skills .ticker-track ul { gap: 0; padding: 0; }
+.view[data-view="projects"] .ticker li, .proj-skills .ticker li { border: 0; border-right: 1px solid var(--line); border-radius: 0; background: none; color: var(--blue); font-family: var(--mono); font-size: 13px; font-weight: 500; padding: 0 22px; border-right-color: var(--blue-line); }
+.view[data-view="projects"] .ticker li::before, .proj-skills .ticker li::before { content: "▲ "; color: var(--accent); font-size: 10px; }
 @keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .pcard .ticker { display: none; margin: 0 -22px 16px; }
 .skills-band { margin: -14px 0 34px; }
@@ -832,7 +842,8 @@ function fillTicker(el) {
   let reps = 1;
   uls.forEach((u) => { u.innerHTML = items; });
   while (uls[0].scrollWidth < el.offsetWidth && reps < 8) { reps++; uls.forEach((u) => { u.innerHTML += items; }); }
-  el.style.setProperty('--dur', Math.max(14, el._list.length * reps * 3.2) + 's');
+  const k = parseFloat(getComputedStyle(el).getPropertyValue('--speed')) || 1;
+  el.style.setProperty('--dur', Math.max(14, el._list.length * reps * 3.2 * k) + 's');
 }
 window.addEventListener('resize', () => document.querySelectorAll('.ticker').forEach((t) => t._list && fillTicker(t)));
 document.querySelectorAll('.pcard[data-skills]').forEach((card) => {
@@ -844,7 +855,10 @@ document.querySelectorAll('.pcard[data-skills]').forEach((card) => {
 });
 document.querySelectorAll('[data-ticker-project]').forEach((el) => {
   const card = document.querySelector(`.pcard[data-skills][href="#/projects/${el.dataset.tickerProject}"]`);
-  if (card) buildTicker(el, card.dataset.skills.split('|')); else el.closest('.skills-band').remove();
+  if (!card) { el.closest('.skills-band').remove(); return; }
+  const list = card.dataset.skills.split('|');
+  buildTicker(el, list);
+
 });
 const capsTicker = document.querySelector('[data-ticker-caps]');
 if (capsTicker) buildTicker(capsTicker, [...document.querySelectorAll('.caps li')].map((li) => li.innerHTML));
