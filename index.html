@@ -215,11 +215,11 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 .ticker li { white-space: nowrap; border: 1px solid var(--blue-line); background: var(--blue-bg); color: var(--blue); border-radius: 999px; padding: 6px 13px; font-size: 13.5px; font-weight: 500; }
 @keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .pcard .ticker { display: none; margin: 0 -22px 16px; }
-.skills-band { margin: 8px 0 12px; padding: 22px 0 6px; border-top: 1px solid var(--line); }
-.skills-band .label { text-align: center; }
-.ticker-all li { font-size: 15px; padding: 8px 16px; }
-/* Phones: one ticker under each project instead of one at the bottom */
-@media (max-width: 760px) {
+.skills-band { margin: -14px 0 34px; }
+.skills-band .label { margin-bottom: 10px; }
+.ticker-group li { font-size: 14.5px; padding: 7px 15px; }
+/* One-column layout (same breakpoint where the NYU grid leaves 2x2): a ticker on each card instead of one per section */
+@media (max-width: 640px) {
   .pcard .ticker { display: block; }
   .view[data-view="projects"] .pcard .tags { display: none; }
   .skills-band { display: none; }
@@ -434,6 +434,10 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
           <div class="tags">Google Apps Script · Workflow Automation · AI Tools</div><span class="pcard-more">View project →</span></div>
       </a>
     </div>
+    <div class="skills-band">
+      <div class="label">Tomo Mortgage skills</div>
+      <div class="ticker ticker-group" data-ticker-group></div>
+    </div>
 
     <div class="group-head"><h3>NYU</h3><span class="rule"></span><span class="count">04 projects</span></div>
     <div class="pgrid pgrid-2">
@@ -455,8 +459,8 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
       </a>
     </div>
     <div class="skills-band">
-      <div class="label">Skills across projects</div>
-      <div class="ticker ticker-all" data-ticker-all></div>
+      <div class="label">NYU skills</div>
+      <div class="ticker ticker-group" data-ticker-group></div>
     </div>
   </section>
 
@@ -774,24 +778,37 @@ document.querySelectorAll('img[data-img]').forEach((img) => {
   if (src) img.src = src.src;
 });
 
-// Skill tickers: one per project card (shown on phones) and one combined (shown on wider screens)
+// Skill tickers: one per project card (phones) and one per section (wider screens)
 function buildTicker(el, list) {
   const items = list.map((t) => `<li>${t}</li>`).join('');
   el.innerHTML = `<span class="sr-only">Skills: ${list.join(', ')}</span><div class="ticker-track" aria-hidden="true"><ul>${items}</ul><ul aria-hidden="true">${items}</ul></div>`;
-  el.style.setProperty('--dur', Math.max(14, list.length * 3.2) + 's');
+  el._list = list;
+  fillTicker(el);
 }
-const allSkills = [];
+// Repeat the skills until one copy is wider than the ticker, so the loop never shows a gap
+function fillTicker(el) {
+  const uls = el.querySelectorAll('.ticker-track ul');
+  if (!el.offsetWidth) return;
+  const items = el._list.map((t) => `<li>${t}</li>`).join('');
+  let reps = 1;
+  uls.forEach((u) => { u.innerHTML = items; });
+  while (uls[0].scrollWidth < el.offsetWidth && reps < 8) { reps++; uls.forEach((u) => { u.innerHTML += items; }); }
+  el.style.setProperty('--dur', Math.max(14, el._list.length * reps * 3.2) + 's');
+}
+window.addEventListener('resize', () => document.querySelectorAll('.ticker').forEach((t) => t._list && fillTicker(t)));
 document.querySelectorAll('.pcard[data-skills]').forEach((card) => {
-  const list = card.dataset.skills.split('|');
-  list.forEach((t) => { if (!allSkills.includes(t)) allSkills.push(t); });
   const t = document.createElement('div');
   t.className = 'ticker';
-  buildTicker(t, list);
   const body = card.querySelector('.pcard-body');
   body.insertBefore(t, body.querySelector('.pcard-more'));
+  buildTicker(t, card.dataset.skills.split('|'));
 });
-const tickerAll = document.querySelector('[data-ticker-all]');
-if (tickerAll) buildTicker(tickerAll, allSkills);
+document.querySelectorAll('[data-ticker-group]').forEach((el) => {
+  const grid = el.closest('.skills-band').previousElementSibling;
+  const list = [];
+  grid.querySelectorAll('.pcard[data-skills]').forEach((c) => c.dataset.skills.split('|').forEach((t) => { if (!list.includes(t)) list.push(t); }));
+  buildTicker(el, list);
+});
 
 // Mobile menu
 const menuBtn = document.querySelector('.menu-btn');
@@ -824,6 +841,7 @@ function route() {
   else if (trail[trail.length - 1] !== path) trail.push(path);
   const view = views.find((v) => v.dataset.view === path) || views.find((v) => v.dataset.view === 'home');
   views.forEach((v) => { v.hidden = v !== view; });
+  view.querySelectorAll('.ticker').forEach((t) => t._list && fillTicker(t));
   const tab = view.dataset.view.split('/')[0];
   const isProject = view.classList.contains('project');
   topBack.hidden = !isProject;
