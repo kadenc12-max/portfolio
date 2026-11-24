@@ -139,8 +139,8 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 
 /* Top bar and menu */
 .topbar { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--line); transition: background .35s ease; }
-@supports (backdrop-filter: blur(1px)) {
-  .topbar { background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(12px); }
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .topbar { background: color-mix(in srgb, var(--bg) 55%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border-bottom-color: color-mix(in srgb, var(--line) 70%, transparent); }
 }
 .topbar-in { max-width: 1280px; margin: 0 auto; padding: 10px clamp(16px,3vw,40px); display: flex; align-items: center; gap: 16px; min-height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-family: var(--serif); font-size: 23px; letter-spacing: -.01em; white-space: nowrap; }
@@ -167,6 +167,16 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 .topback[hidden] { display: none; }
 .back-end { margin: 40px 0 0; }
 .back-end + .pager { margin-top: 16px; }
+
+/* Compact tab bar: replaces name, mode and menu on small screens once the header scrolls away */
+.quicktabs { display: none; }
+@media (max-width: 760px) {
+  .past-header .brand, .past-header .topback, .past-header .topbar .mode, .past-header .menu-btn { display: none; }
+  .past-header .quicktabs { display: flex; flex: 1; gap: 6px; padding: 4px; background: var(--panel2); border: 1px solid var(--line); border-radius: 999px; animation: quickIn .25s ease; }
+  .quicktabs a { flex: 1; text-align: center; padding: 9px 6px; border-radius: 999px; color: var(--ink2); font-size: 15px; font-weight: 600; }
+  .quicktabs a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
+}
+@keyframes quickIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 
 /* Section headings */
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 36px 0 16px; }
@@ -368,6 +378,11 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
       <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
       <span class="menu-word">Menu</span>
     </button>
+    <nav class="quicktabs" aria-label="Pages">
+      <a href="#/" data-tab="home">Home</a>
+      <a href="#/projects" data-tab="projects">Projects</a>
+      <a href="#/about" data-tab="about">About</a>
+    </nav>
     <nav class="nav" id="site-nav" aria-label="Main">
       <ul class="tabs">
         <li><a href="#/" data-tab="home">Home</a></li>
@@ -909,6 +924,7 @@ function route() {
     if (a.dataset.tab === tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   document.title = view.dataset.title ? `${view.dataset.title} · Kaden Cobbs` : baseTitle;
+  if (typeof watchHeader === 'function') watchHeader(view);
   setMenu(false);
   if (!firstRoute) {
     window.scrollTo(0, 0);
@@ -916,6 +932,19 @@ function route() {
     if (h) h.focus({ preventScroll: true });
   }
   firstRoute = false;
+}
+// Small screens: once the page header scrolls under the top bar, show the compact tabs instead
+const headerWatch = new IntersectionObserver(([entry]) => {
+  const past = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+  document.body.classList.toggle('past-header', past);
+  if (past) setMenu(false);
+}, { rootMargin: '-61px 0px 0px 0px' });
+function watchHeader(view) {
+  headerWatch.disconnect();
+  document.body.classList.remove('past-header');
+  if (!['home', 'projects', 'about'].includes(view.dataset.view)) return;
+  const head = view.querySelector('.header, .page-head');
+  if (head) headerWatch.observe(head);
 }
 window.addEventListener('hashchange', route);
 route();
