@@ -140,7 +140,13 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 /* Top bar and menu */
 .topbar { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--line); transition: background .35s ease; }
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  .topbar { background: color-mix(in srgb, var(--bg) 55%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border-bottom-color: color-mix(in srgb, var(--line) 70%, transparent); }
+  .topbar { background: transparent; border-bottom-color: color-mix(in srgb, var(--line) 70%, transparent); }
+  .topbar::before { content: ""; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--bg) 55%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+  @media (max-width: 760px) {
+    .nav { background: color-mix(in srgb, var(--bg) 55%, transparent) !important; -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border-bottom-color: color-mix(in srgb, var(--line) 70%, transparent) !important; }
+    .tabs a { background: color-mix(in srgb, var(--panel) 55%, transparent) !important; border-color: color-mix(in srgb, var(--line) 80%, transparent) !important; }
+    .tabs a[aria-current="page"] { background: var(--accent) !important; border-color: var(--accent) !important; }
+  }
 }
 .topbar-in { max-width: 1280px; margin: 0 auto; padding: 10px clamp(16px,3vw,40px); display: flex; align-items: center; gap: 16px; min-height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-family: var(--serif); font-size: 23px; letter-spacing: -.01em; white-space: nowrap; }
@@ -171,12 +177,22 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 /* Compact tab bar: replaces name, mode and menu on small screens once the header scrolls away */
 .quicktabs { display: none; }
 @media (max-width: 760px) {
-  .past-header .brand, .past-header .topback, .past-header .topbar .mode, .past-header .menu-btn { display: none; }
-  .past-header .quicktabs { display: flex; flex: 1; gap: 6px; padding: 4px; background: var(--panel2); border: 1px solid var(--line); border-radius: 999px; animation: quickIn .25s ease; }
-  .quicktabs a { flex: 1; text-align: center; padding: 9px 6px; border-radius: 999px; color: var(--ink2); font-size: 15px; font-weight: 600; }
+  .topbar-in { position: relative; }
+  /* The tab pill sits over the bar, clipped down to the menu button's spot; it unfolds leftward when the header scrolls away */
+  .quicktabs { display: flex; gap: 6px; padding: 4px; position: absolute; top: 50%; right: clamp(16px,3vw,40px); left: calc(clamp(16px,3vw,40px) + 46px); transform: translateY(-50%); background: var(--panel2); border: 1px solid var(--line); border-radius: 999px; clip-path: inset(0 0 0 calc(100% - 46px) round 999px); opacity: 0; pointer-events: none; transition: clip-path .5s cubic-bezier(.65,0,.35,1), opacity .2s ease; }
+  .past-header .quicktabs { clip-path: inset(0 0 0 0 round 999px); opacity: 1; pointer-events: auto; }
+  .quicktabs a { flex: 1; text-align: center; padding: 9px 6px; border-radius: 999px; color: var(--ink2); font-size: 15px; font-weight: 600; opacity: 0; transform: translateX(8px); transition: opacity .15s ease, transform .15s ease, background .2s ease; }
+  .past-header .quicktabs a { opacity: 1; transform: none; transition: opacity .25s ease .28s, transform .25s ease .28s, background .2s ease; }
   .quicktabs a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
+  /* Menu and mode switch fade away as the pill unfolds; the logo stays */
+  .menu-btn, .topbar .mode, .brand span { transition: opacity .2s ease, transform .3s ease; }
+  .past-header .menu-btn { opacity: 0; transform: scale(.85); pointer-events: none; }
+  .past-header .topbar .mode { opacity: 0; pointer-events: none; }
+  .past-header .brand span { opacity: 0; }
+  .menu-icon span { transition: transform .3s ease, opacity .2s ease; }
+  .past-header .menu-icon span:nth-child(1) { transform: translateY(6px); }
+  .past-header .menu-icon span:nth-child(3) { transform: translateY(-6px); }
 }
-@keyframes quickIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 
 /* Section headings */
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 36px 0 16px; }
