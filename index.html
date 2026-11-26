@@ -82,6 +82,11 @@ h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104p
 .header .contact-row { gap: 8px; }
 .header .pill { padding: 7px 13px; font-size: 13px; }
 .header .pill-accent { padding: 7px 14px; }
+@media (min-width: 1260px) {
+  .header .contact-row { gap: 10px; }
+  .header .pill { padding: 11px 19px; font-size: 15px; }
+  .header .pill-accent { padding: 11px 20px; }
+}
 
 .mode { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
 .mode-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink3); font-weight: 700; font-style: italic; text-decoration: underline; }
