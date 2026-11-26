@@ -71,6 +71,14 @@ h1, h2, h3, p, ul, figure { margin: 0; }
 .hello { font-family: var(--serif); font-style: italic; font-size: clamp(15px,2vw,20px); color: var(--ink2); line-height: 1; }
 h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(52px,9vw,104px); line-height: .92; margin: 6px 0 12px; letter-spacing: -.02em; }
 .tagline { font-size: clamp(16px,1.6vw,20px); color: var(--ink2); max-width: 46ch; text-wrap: pretty; }
+/* Wider screens: a slightly larger hero (phones keep the sizes above) */
+@media (min-width: 901px) {
+  .header .avatar { width: clamp(140px, 12.5vw, 190px); }
+  .header .eyebrow { font-size: 13px; }
+  .header .hello { font-size: clamp(18px, 1.6vw, 23px); }
+  .header h1 { font-size: clamp(76px, 8.4vw, 124px); }
+  .header .tagline { font-size: clamp(18px, 1.45vw, 22px); }
+}
 
 .contact { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; flex: 1 1 340px; }
 .contact-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
